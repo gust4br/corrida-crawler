@@ -1,4 +1,4 @@
-import { mkdirSync } from 'fs';
+import crypto from 'crypto';
 import puppeteer, { Browser, Page } from 'puppeteer';
 
 export default class Crawler{
@@ -7,13 +7,11 @@ export default class Crawler{
     protected url: string;
     protected loginUrl: string;
     protected alertClass: string;
-    protected dateTime: string | undefined;
 
-    constructor(url: string, loginUrl: string, alertClass: string, time: string){
+    constructor(url: string, loginUrl: string, alertClass: string){
         this.url = url;
         this.loginUrl = loginUrl;
         this.alertClass = alertClass;
-        this.dateTime = time;
     }
 
     async build(){
@@ -68,8 +66,9 @@ export default class Crawler{
 
         async getScreenshot(){
             if(!this.page) return;
+            const id = crypto.randomBytes(16).toString("hex");
             await this.page.screenshot({
-                path: `results/img/${this.dateTime}-screen.png`,
+                path: `results/img/${id}.png`,
             });
         }
         
