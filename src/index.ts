@@ -1,6 +1,9 @@
+import dotenv from 'dotenv';
 import dayjs from "dayjs";
 import Crawler from "./crawler";
 import Notify from "./notify";
+
+dotenv.config();
 
 const pageUrl = "https://corridadopantanal.com.br/";
 const loginUrl = "https://corridadopantanal.com.br/users/sign_in";
@@ -28,11 +31,16 @@ async function execute() {
 
     if(notifyResponse == 'activate'){
         now = dayjs();
-        const canSubscribe = await crawler.getSubscriptionsStatus('login', 'password');
+        if(process.env.LOGIN == undefined || process.env.PASSWORD == undefined){
+            console.log(now.format('DD/MM/YYYY [às] HH:mm:ss') + ' - ' + 'Variáveis de ambiente não configuradas.');
+            return;
+        }        
+
+        const canSubscribe = await crawler.getSubscriptionsStatus(process.env.LOGIN, process.env.PASSWORD);
         let canSubscribeMessage = 'Inscrição não encontrada';
         if(canSubscribe)
             canSubscribeMessage = 'É possível registrar!';
-
+        now = dayjs();
         console.log(now.format('DD/MM/YYYY [às] HH:mm:ss') + ' - ' + canSubscribeMessage);
 
         await notify.notifyAsync({
