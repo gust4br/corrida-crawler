@@ -11,8 +11,6 @@
  <a href="#tech">Tech</a> • 
 </p>
 
-[Access the project](https://px-to-rem-sigma.vercel.app/)
-
 ### About:
 This is a personal project to crawl the <a href="https://corridadopantanal.com.br" target="_blank">Pantanal race</a> website and check if registrations for the batch are open
 

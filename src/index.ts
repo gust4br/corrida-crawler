@@ -1,5 +1,4 @@
 import dotenv from 'dotenv';
-import dayjs from "dayjs";
 import Crawler from "./crawler";
 import Notify from "./notify";
 
@@ -8,7 +7,7 @@ dotenv.config();
 const pageUrl = "https://corridadopantanal.com.br/";
 const loginUrl = "https://corridadopantanal.com.br/users/sign_in";
 const alertClass = ".alert.alert-danger";
-const runInterval = 1000 * 60 * 15; //30 min;
+const runInterval = 1000 * 60 * 60; //1hr;
 
 async function execute() {
     const crawler = new Crawler(pageUrl, loginUrl, alertClass);
@@ -27,6 +26,7 @@ async function execute() {
         message: message,
         actions: 'Verificar',
         wait: true,
+        sound: true,
     });
 
     if(notifyResponse == 'activate'){
@@ -46,6 +46,7 @@ async function execute() {
         await notify.notifyAsync({
             title: 'Crawler Buscou!',
             message: canSubscribeMessage,
+            sound: true
         });
         await crawler.getScreenshot();
     }
