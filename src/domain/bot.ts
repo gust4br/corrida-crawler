@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 import puppeteer, { Browser, Page } from "puppeteer";
-import { Urls } from './@types/url';
+import { Urls } from '../@types/url';
 
 export default abstract class Bot{
   protected browser : Browser | undefined;
@@ -44,6 +44,13 @@ export default abstract class Bot{
     return this.page.screenshot({
         path: `results/img/${name && name + '-'}${id}.png`,
     });
+  }
+
+  clickHidden(id: string){
+    return this.page?.evaluate((id) => {
+      const el: HTMLElement | null = document.querySelector(id);
+      if(el) el.click();
+    }, id)
   }
 
   destroy(){

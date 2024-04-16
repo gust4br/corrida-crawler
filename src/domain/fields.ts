@@ -47,7 +47,7 @@ export class FieldsId {
     instagram(): string { return this.prefix + 'insta'},
     facebook(): string { return this.prefix + 'face'},
     tiktok(): string { return this.prefix + 'tiktok'},
-    linkedin(): string { return this.prefix + 'linkedin'},
+    linkedin(): string { return this.prefix + 'linkdin'},
     x(): string { return this.prefix + 'twitter'}
   }
 

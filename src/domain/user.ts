@@ -1,6 +1,14 @@
+type SocialMediaTypes = {
+  instagram?: string,
+  facebook?: string,
+  tiktok?: string,
+  linkedin?: string,
+  x?: string
+}
+
 export enum Genre {
-  MASCULINO = 'masculino',
-  FEMININO = 'feminino',
+  MASCULINO = 'masculine',
+  FEMININO = 'feminine',
   NONE = 'not_inform'
 }
 
@@ -33,6 +41,11 @@ export enum TShirt {
   EG = 'eg',
 }
 
+export enum HasHealthInsurance{
+  SIM = 'true',
+  NAO = 'false',
+}
+
 export class User {
   private fullName: string;
   private email: string;
@@ -48,6 +61,9 @@ export class User {
   private category: Category;
 
   private tShirt: TShirt;
+
+  private hasHealthInsurance: HasHealthInsurance = HasHealthInsurance.NAO;
+  private healthInsuranceName: string | undefined;
 
   private emergencyFullName: string | undefined;
   private emergencyEmail: string | undefined;
@@ -115,6 +131,22 @@ export class User {
     }
   }
 
+  setHealthInsuranceData(name: string){
+    if(name)
+      this.hasHealthInsurance = HasHealthInsurance.SIM;
+    else
+      this.hasHealthInsurance = HasHealthInsurance.NAO;
+
+    this.healthInsuranceName = name;
+  }
+
+  getHealthInsuranceData(){
+    return { 
+      hasHealthInsurance: this.hasHealthInsurance,
+      name: this.healthInsuranceName
+    }
+  }
+
   setEmergencyContactData(fullName?: string, email?: string, phone?: string){
     this.emergencyFullName = fullName;    
     this.emergencyEmail = email;
@@ -129,7 +161,7 @@ export class User {
     }
   }
 
-  setSocialMediaData(instagram?: string, facebook?: string, tiktok?: string, linkedin?: string, x?: string){
+  setSocialMediaData({instagram, facebook, tiktok, linkedin, x } : SocialMediaTypes){
     this.instagram = instagram;
     this.facebook = facebook;
     this.tiktok = tiktok;
