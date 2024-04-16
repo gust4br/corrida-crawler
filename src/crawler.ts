@@ -1,32 +1,20 @@
-import crypto from 'crypto';
-import puppeteer, { Browser, Page } from 'puppeteer';
+import Bot from './bot';
 
-export default class Crawler{
-    protected browser : Browser | undefined;
-    protected page : Page | undefined;
-    protected url: string;
-    protected loginUrl: string;
-    protected alertClass: string;
+export default class Crawler extends Bot{
+    private url: string;
+    private loginUrl: string;
 
     constructor(url: string, loginUrl: string, alertClass: string){
+        super();
         this.url = url;
         this.loginUrl = loginUrl;
-        this.alertClass = alertClass;
-    }
-
-    async build(){
-        this.browser = await puppeteer.launch();
-        this.page = await this.browser.newPage();        
-        await this.page.setViewport({width: 1366, height: 768});
     }
 
     async getAlertMessage(){
         if(!this.page)
             return null;
 
-        await this.page.goto(this.url, {
-            waitUntil: 'networkidle2',
-        });
+        await this.navigateTo(this.url);        
 
         const message = await this.page.evaluate(() => {
             const alert = document.querySelector('.alert.alert-danger');
@@ -41,9 +29,9 @@ export default class Crawler{
     
     async getSubscriptionsStatus(login: string, password: string){
         if(!this.page) return;
-        await this.page.goto(this.loginUrl, {
-            waitUntil: 'networkidle2',
-        });
+        
+        await this.navigateTo(this.loginUrl);
+
         const loginSelector = 'input.form-control[name="user[login]"]';
         const passwordSelector = 'input.form-control[type="password"][name="user[password]"]';
         const submitSelector = 'input[type="submit"].btn-primary';
@@ -62,18 +50,6 @@ export default class Crawler{
             });
             
             return canSubscribe;
-        }
-
-        async getScreenshot(){
-            if(!this.page) return;
-            const id = crypto.randomBytes(16).toString("hex");
-            await this.page.screenshot({
-                path: `results/img/${id}.png`,
-            });
-        }
-        
-        async destroy(){
-            if(this.browser)
-                await this.browser.close();
-        }
     }
+        
+}
