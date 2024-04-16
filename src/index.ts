@@ -17,8 +17,11 @@ const alertClass = ".alert.alert-danger";
 const runInterval = 1000 * 60 * 60; //1hr;
 
 async function executeFilling(){
-    const user = new User('Gustavo Gomes', 'gustavo@gomes.com', '11/03/2000', '123.456.789-10', Genre.MASCULINO, 'Elizabete silva', Category.GENERAL_5KM, TShirt.G);
-    user.setAddressData('Rua Jurupecem 118', '24', '5119');
+    const user = new User('Gustavo Gomes', 'gustavo@gomes.com', '11/03/2000', '123.456.789-10', Genre.MASCULINO, 'Marcia silva', Category.GENERAL_8KM, TShirt.G);
+    user.setAddressData('Rua Super Master, 123', '24', '5119');
+    // user.setHealthInsuranceData('Unimed');
+    user.setEmergencyContactData('Marcia Silva', 'marcia@silva.com', '67999490563');
+
     const filling = new FormFilling(urls, user);
 
     await filling.formfilling();
