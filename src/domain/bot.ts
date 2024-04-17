@@ -24,6 +24,7 @@ export default abstract class Bot{
     await this.page.type(passwordSelector, password);
     await this.page.waitForSelector(submitSelector);
     await this.page.click(submitSelector);
+    await this.wait(1000);
 
     if(this.page.url() === urls.base + urls.enrollments)
       return true;
@@ -51,6 +52,12 @@ export default abstract class Bot{
       const el: HTMLElement | null = document.querySelector(id);
       if(el) el.click();
     }, id)
+  }
+
+  wait(milliseconds: number){
+    return new Promise(function(resolve) { 
+      setTimeout(resolve, milliseconds)
+  });
   }
 
   destroy(){

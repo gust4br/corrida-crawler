@@ -80,6 +80,8 @@ export default class FormFilling extends Bot {
         this.notify.log("Enviando formulário...");
 
         const message = await this.checkReturnMessage(this.page);
+        await this.wait(1000);
+
         if(!message){
             await this.screenshot('error-form');
             return false;
