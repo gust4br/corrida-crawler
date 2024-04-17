@@ -1,4 +1,5 @@
 import dotenv from 'dotenv';
+import Notify from './domain/notify';
 import FormFilling from './FormFilling';
 import { Urls } from './@types/url';
 import { Category, Genre, TShirt, User } from './domain/user';
@@ -11,12 +12,10 @@ const urls: Urls = {
     new: "/new"
 }
 
-const pageUrl = "https://corridadopantanal.com.br/";
-const loginUrl = "https://corridadopantanal.com.br/users/sign_in";
-const alertClass = ".alert.alert-danger";
 const runInterval = 1000 * 60 * 60; //1hr;
 
 async function executeFilling(){
+    const notify = new Notify();
     const user = new User('Gustavo Gomes', 'gustavo@gomes.com', '13/02/2004', '123.456.789-10', Genre.MASCULINO, 'Marcia silva', Category.GENERAL_8KM, TShirt.G);
     user.setAddressData('Rua Super Master, 123', '24', '5119');
     // user.setHealthInsuranceData('Unimed');
@@ -25,7 +24,11 @@ async function executeFilling(){
 
     const filling = new FormFilling(urls, user);
 
-    await filling.formfilling();
+    const result = await filling.formfilling();
+
+    if(!result)
+        notify.log("Erro ao enviar o formulário");
+    notify.log("Formulário enviado com sucesso.");
 }
 
 executeFilling();

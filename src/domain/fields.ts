@@ -54,7 +54,7 @@ export class FieldsId {
   public carbonoAttributesData = {
     prefix: this.prefix + 'carbono_attributes_',
     vehicleSelect: {
-      id: this.prefix + 'veiculo_evento',
+      id: '#enrollment_carbono_attributes_veiculo_evento',
       ownVehicle: 'veiculo_proprio',
       rentedVehicle: 'veiculo_alugado',
       app: 'aplicativo',
@@ -75,9 +75,9 @@ export class FieldsId {
     ownVehicle(): string { return this.prefix + 'veiculo_veiculo_proprio'},
     rentedVehicle(): string { return this.prefix + 'veiculo_veiculo_alugado'},
     permanence(): string { return this.prefix + 'permanencia'},
-    roundTrips(): string { return this.prefix + 'idas_voltas'}
+    roundTrips(): string { return this.prefix + 'idas_voltas_evento'}
   }
 
-  public polices = 'polices';
+  public polices = '#policies';
 
 }

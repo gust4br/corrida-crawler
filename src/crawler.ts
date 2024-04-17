@@ -1,4 +1,4 @@
-import Bot from './bot';
+import Bot from './domain/bot';
 
 export default class Crawler extends Bot{
     private url: string;
